@@ -1,0 +1,33 @@
+{
+  "name": "textr-cli",
+  "version": "0.1.0",
+  "description": "CLI for Textr",
+  "author": {
+    "name": "Denys Dovhan",
+    "email": "email@denysdovhan.com",
+    "url": "denysdovhan.com"
+  },
+  "bin": {
+    "textr": "cli.js"
+  },
+  "engines": {
+    "node": ">=0.10"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/denysdovhan/textr-cli.git"
+  },
+  "keywords": [
+    "textr",
+    "cli-app",
+    "cli"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/denysdovhan/textr-cli/issues"
+  },
+  "homepage": "https://github.com/denysdovhan/textr-cli#readme"
+}
