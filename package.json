@@ -37,9 +37,13 @@
   },
   "homepage": "https://github.com/denysdovhan/textr-cli#readme",
   "devDependencies": {
-    "babel": "^5.0.0",
+    "babel-cli": "^6.0.12",
+    "babel-preset-es2015": "^6.0.12",
     "npm-run-all": "*",
     "rimraf": "*"
   },
-  "dependencies": {}
+  "dependencies": {},
+  "babel": {
+    "presets": ["es2015"]
+  }
 }
