@@ -1,1 +1,5 @@
-// Here will be a cli for textr
+#!/usr/bin/env node
+
+import pkg from './package'
+
+console.log(pkg.version);

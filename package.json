@@ -8,26 +8,38 @@
     "url": "denysdovhan.com"
   },
   "bin": {
-    "textr": "cli.js"
+    "textr": "cli.es5.js"
   },
   "engines": {
     "node": ">=0.10"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "babel cli.js --watch --out-file cli.es5.js ",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "transpile": "babel cli.js --out-file cli.es5.js",
+    "prepublish": "npm run transpile",
+    "clean": "rimraf cli.es5.js",
+    "push": "git push --follow-tags",
+    "postpublish": "npm-run-all clean push"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/denysdovhan/textr-cli.git"
   },
   "keywords": [
-    "textr",
+    "cli",
     "cli-app",
-    "cli"
+    "textr"
   ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/denysdovhan/textr-cli/issues"
   },
-  "homepage": "https://github.com/denysdovhan/textr-cli#readme"
+  "homepage": "https://github.com/denysdovhan/textr-cli#readme",
+  "devDependencies": {
+    "babel": "^5.0.0",
+    "npm-run-all": "*",
+    "rimraf": "*"
+  },
+  "dependencies": {}
 }
