@@ -8,7 +8,7 @@
     "url": "denysdovhan.com"
   },
   "bin": {
-    "textr": "cli.es5.js"
+    "textr": "bin/textr"
   },
   "engines": {
     "node": ">=0.10"
