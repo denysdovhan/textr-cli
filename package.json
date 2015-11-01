@@ -14,6 +14,7 @@
     "node": ">=0.10"
   },
   "scripts": {
+    "lint": "eslint cli.js",
     "start": "babel cli.js --watch --out-file cli.es5.js ",
     "test": "echo \"Error: no test specified\" && exit 1",
     "transpile": "babel cli.js --out-file cli.es5.js",
@@ -38,7 +39,9 @@
   "homepage": "https://github.com/denysdovhan/textr-cli#readme",
   "devDependencies": {
     "babel-cli": "^6.0.12",
+    "babel-eslint": "^4.1.3",
     "babel-preset-es2015": "^6.0.12",
+    "eslint": "^1.8.0",
     "npm-run-all": "*",
     "rimraf": "*"
   },
