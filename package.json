@@ -43,9 +43,12 @@
     "babel-preset-es2015": "^6.0.12",
     "eslint": "^1.8.0",
     "npm-run-all": "*",
-    "rimraf": "*"
   },
-  "dependencies": {},
+  "dependencies": {
+    "get-stdin": "^5.0.0",
+    "minimist": "^1.2.0",
+    "textr": "^0.3.0"
+  },
   "babel": {
     "presets": [
       "es2015"
