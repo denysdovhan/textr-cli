@@ -46,7 +46,7 @@
   },
   "dependencies": {
     "get-stdin": "^5.0.0",
-    "minimist": "^1.2.0",
+    "meow": "^3.5.0",
     "textr": "^0.3.0"
   },
   "babel": {
