@@ -14,10 +14,10 @@
     "node": ">=0.10"
   },
   "scripts": {
-    "lint": "eslint cli.js",
-    "start": "babel cli.js --watch --out-file cli.es5.js ",
+    "lint": "eslint cli",
+    "start": "babel cli --watch --out-file cli.es5.js ",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "transpile": "babel cli.js --out-file cli.es5.js",
+    "transpile": "babel cli --out-file cli.es5.js",
     "prepublish": "npm run transpile",
     "clean": "rimraf cli.es5.js",
     "push": "git push --follow-tags",
