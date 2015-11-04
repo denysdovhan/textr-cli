@@ -46,6 +46,9 @@
     "eslint": "^1.8.0",
     "mocha": "^2.3.3",
     "npm-run-all": "*",
+    "typographic-ellipses": "^1.0.11",
+    "typographic-quotes": "^1.2.1",
+    "typographic-single-spaces": "^1.0.2"
   },
   "dependencies": {
     "get-stdin": "^5.0.0",
