@@ -4,3 +4,6 @@ node_js:
   - '4.0'
   - '0.12'
   - '0.10'
+# Add premissions
+before_script:
+  - chmod +x ./bin/textr
