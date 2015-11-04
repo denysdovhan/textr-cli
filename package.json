@@ -11,7 +11,7 @@
     "textr": "bin/textr"
   },
   "engines": {
-    "node": ">=0.10"
+    "node": ">=0.12"
   },
   "scripts": {
     "lint": "eslint cli",
