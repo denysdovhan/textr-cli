@@ -21,17 +21,20 @@ const cli = meow(`
   Options
     -t, --transforms    Array of transformers
     -h, --help          Show this message
+    -o, --out-file      Write output to file
 
   Examples
     $ textr foo.md -t typographic-quotes -t typographic-quotes
     $ textr foo.md -t typographic-single-spaces,typographic-quotes
     $ cat foo.md | textr --transforms=typographic-single-spaces
+    $ cat foo.md | textr -o bar.md
 `,
   {
     default: {
       transforms: [],
     },
     alias: {
+      o: 'out-file',
       t: 'transforms',
       h: 'help'
     }
@@ -50,11 +53,21 @@ const cwd = file =>
  * Render text string throught textr transformer
  * @param  {String} text Text that will be processed
  * @param  {Array}  tfs  Array of transformers
- * @return {Void}        Output into strout and exit
+ * @return {Void}        Write into strout or file and exit
  */
 const render = (text, tfs = []) => {
-  process.stdout.write((textr().use.apply(null, tfs))(text));
-  process.exit(0);
+  const res = (textr().use.apply(null, tfs))(text);
+  if (cli.flags.outFile) {
+    try {
+      fs.writeFileSync(cwd(cli.flags.outFile), res, 'utf8');
+    } catch (e) {
+      console.error(`Something went wrong: ${e.message}`);
+      process.exit(1);
+    }
+  } else {
+    process.stdout.write(res);
+    process.exit(0);
+  }
 };
 
 /**
