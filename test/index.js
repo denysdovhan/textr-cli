@@ -23,7 +23,7 @@ describe('textr-cli', () => {
 
   });
 
-  describe('loading input', () => {
+  describe('input and output', () => {
 
     it('should load file as first argument', () => {
       const stdout = execFileSync(`${textr}`, ['fixtures'], {
@@ -40,6 +40,34 @@ describe('textr-cli', () => {
         assert.equal(stdout, fixtures);
         done();
       });
+    });
+
+    it('should write to file with --out-file', () => {
+      const stdout = execFileSync(`${textr}`, [
+        'fixtures',
+        '-o',
+        'actual',
+        '--transforms',
+        'typographic-single-spaces,typographic-quotes,typographic-ellipses'], {
+          cwd: __dirname
+        });
+
+      assert.equal(stdout.toString(), '');
+      assert.equal(fs.readFileSync('test/actual', 'utf8'), expected);
+    });
+
+    it('should write to file with --o', () => {
+      const stdout = execFileSync(`${textr}`, [
+        'fixtures',
+        '--out-file',
+        'actual',
+        '--transforms',
+        'typographic-single-spaces,typographic-quotes,typographic-ellipses'], {
+          cwd: __dirname
+        });
+
+      assert.equal(stdout.toString(), '');
+      assert.equal(fs.readFileSync('test/actual', 'utf8'), expected);
     });
 
   });
