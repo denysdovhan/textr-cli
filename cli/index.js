@@ -85,10 +85,15 @@ const tfs = (t = cli.flags.transforms) =>
  */
 if (cli.input[0]) {
   // If there is first argument, then read this file
-  render(
-    fs.readFileSync(cwd(cli.input[0])).toString(),
-    tfs()
-  );
+  try {
+    render(
+      fs.readFileSync(cwd(cli.input[0])).toString(),
+      tfs()
+    );
+  } catch (e) {
+    console.error(`Something went wrong: ${e.message}`);
+    process.exit(1);
+  }
 } else {
   // If there's no first argument, then try to read stdin
   stdin()
