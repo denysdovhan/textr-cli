@@ -20,13 +20,14 @@ const cli = meow(`
 
   Options
     -t, --transforms    Array of transformers
-    -h, --help          Show this message
     -o, --out-file      Write output to file
+    -l, --locale        ISO 639 locale codes (en-us as default)
+    -h, --help          Show this message
 
   Examples
     $ textr foo.md -t typographic-quotes -t typographic-quotes
     $ textr foo.md -t typographic-single-spaces,typographic-quotes
-    $ cat foo.md | textr --transforms=typographic-single-spaces
+    $ cat foo.md | textr -l ru --transforms=typographic-single-spaces
     $ cat foo.md | textr -o bar.md
 `,
   {
@@ -34,8 +35,9 @@ const cli = meow(`
       transforms: [],
     },
     alias: {
-      o: 'out-file',
       t: 'transforms',
+      o: 'out-file',
+      l: 'locale',
       h: 'help'
     }
   }
@@ -55,8 +57,8 @@ const cwd = file =>
  * @param  {Array}  tfs  Array of transformers
  * @return {Void}        Write into strout or file and exit
  */
-const render = (text, tfs = []) => {
-  const res = (textr().use.apply(null, tfs))(text);
+const render = (text, tfs = [], locale = 'en-us') => {
+  const res = (textr({ locale }).use.apply(null, tfs))(text);
   if (cli.flags.outFile) {
     try {
       fs.writeFileSync(cwd(cli.flags.outFile), res, 'utf8');
@@ -88,7 +90,8 @@ if (cli.input[0]) {
   try {
     render(
       fs.readFileSync(cwd(cli.input[0])).toString(),
-      tfs()
+      tfs(),
+      cli.flags.locale
     );
   } catch (e) {
     console.error(`Something went wrong: ${e.message}`);
@@ -97,6 +100,6 @@ if (cli.input[0]) {
 } else {
   // If there's no first argument, then try to read stdin
   stdin()
-    .then(str => render(str, tfs()))
+    .then(str => render(str, tfs(), cli.flags.locale))
     .catch(err => err);
 }
