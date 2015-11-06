@@ -5,7 +5,7 @@ import fs from 'fs';
 const textr = '../bin/textr';
 
 const fixtures = fs.readFileSync('test/fixtures', 'utf-8');
-const expected = fs.readFileSync('test/expected', 'utf-8');
+let expected = fs.readFileSync('test/expected/en', 'utf-8');
 
 describe('textr-cli', () => {
 
@@ -130,6 +130,38 @@ describe('textr-cli', () => {
         'typographic-quotes',
         '-t',
         'typographic-ellipses'], {
+          cwd: __dirname
+        });
+      assert.equal(stdout.toString(), expected);
+    });
+
+  });
+
+  describe('locale', () => {
+
+    before(() => {
+      expected = fs.readFileSync('test/expected/ru', 'utf-8');
+    });
+
+    it('should load locale using --locale', () => {
+      const stdout = execFileSync(`${textr}`, [
+        'fixtures',
+        '--locale',
+        'ru',
+        '-t',
+        'typographic-single-spaces,typographic-quotes,typographic-ellipses'], {
+          cwd: __dirname
+        });
+      assert.equal(stdout.toString(), expected);
+    });
+
+    it('should load locale using -l', () => {
+      const stdout = execFileSync(`${textr}`, [
+        'fixtures',
+        '-l',
+        'ru',
+        '-t',
+        'typographic-single-spaces,typographic-quotes,typographic-ellipses'], {
           cwd: __dirname
         });
       assert.equal(stdout.toString(), expected);
