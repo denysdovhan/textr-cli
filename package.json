@@ -14,12 +14,14 @@
     "node": ">=0.12"
   },
   "scripts": {
-    "lint": "eslint cli",
-    "start": "babel cli --watch --out-file cli.es5.js ",
+    "lint": "eslint cli test",
+    "watch": "babel cli --watch --out-file cli.es5.js ",
     "test": "mocha --compilers js:babel-core/register",
     "tdd": "npm test -- --watch",
-    "transpile": "babel cli --out-file cli.es5.js",
-    "prepublish": "npm run transpile",
+    "prebuild": "npm-run-all lint clean",
+    "build": "babel cli --out-file cli.es5.js",
+    "postbuild": "npm run test",
+    "prepublish": "npm run build -s",
     "clean": "rimraf cli.es5.js",
     "push": "git push --follow-tags",
     "postpublish": "npm-run-all clean push"
