@@ -1,7 +1,7 @@
 {
   "name": "textr-cli",
   "version": "0.1.0",
-  "description": "CLI for Textr",
+  "description": "Command line interface for Textr",
   "author": {
     "name": "Denys Dovhan",
     "email": "email@denysdovhan.com",
@@ -10,6 +10,7 @@
   "bin": {
     "textr": "bin/textr"
   },
+  "preferGlobal": true,
   "engines": {
     "node": ">=0.12"
   },
@@ -18,9 +19,8 @@
     "watch": "babel cli --watch --out-file cli.es5.js ",
     "test": "mocha --compilers js:babel-core/register",
     "tdd": "npm test -- --watch",
-    "prebuild": "npm-run-all lint clean",
+    "prebuild": "npm-run-all clean",
     "build": "babel cli --out-file cli.es5.js",
-    "postbuild": "npm run test",
     "prepublish": "npm run build -s",
     "clean": "rimraf cli.es5.js",
     "push": "git push --follow-tags",
