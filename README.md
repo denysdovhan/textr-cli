@@ -41,6 +41,7 @@ You can use `textr` with specified options:
 *  `-t`, `--transforms` — array of transformers, which will be applied (transformers should be installed globaly or localy in current project);
 * `-o`, `--out-file` — write output to file;
 * `-l`, `--locale` — ISO 639 locale codes (`en-us` as default);
+* `-w`, `--watch` — Watch changes in source file (works only with input as first argument and output through `-o` or `--out-file` flags);
 * `-h`, `--help` — show help message.
 
 ## Real world
