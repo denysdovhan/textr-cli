@@ -1,6 +1,7 @@
 // NPM Modules
 import meow     from 'meow';
 import stdin    from 'get-stdin';
+import watcher  from 'chokidar';
 import textr    from 'textr';
 
 // Native Modules
@@ -22,6 +23,7 @@ const cli = meow(`
     -t, --transforms    Array of transformers
     -o, --out-file      Write output to file
     -l, --locale        ISO 639 locale codes (en-us as default)
+    -w, --watch         Watch changes in source file
     -h, --help          Show this message
 
   Examples
@@ -38,6 +40,7 @@ const cli = meow(`
       t: 'transforms',
       o: 'out-file',
       l: 'locale',
+      w: 'watch',
       h: 'help'
     }
   }
@@ -53,15 +56,16 @@ const cwd = file =>
 
 /**
  * Render text string throught textr transformer
- * @param  {String} text Text that will be processed
- * @param  {Array}  tfs  Array of transformers
- * @return {Void}        Write into strout or file and exit
+ * @param  {String} text   Text that will be processed
+ * @param  {Array}  tfs    Array of transformers
+ * @param  {String} output File to write output
+ * @return {Void}          Write into strout or file and exit
  */
-const render = (text, tfs = [], locale = 'en-us') => {
+const render = (text, tfs = [], locale = 'en-us', output) => {
   const res = (textr({ locale }).use.apply(null, tfs))(text);
-  if (cli.flags.outFile) {
+  if (output) {
     try {
-      fs.writeFileSync(cwd(cli.flags.outFile), res, 'utf8');
+      fs.writeFileSync(cwd(output), res, 'utf8');
     } catch (e) {
       console.error(`Something went wrong: ${e.message}`);
       process.exit(1);
@@ -87,12 +91,22 @@ const tfs = (t = cli.flags.transforms) =>
  */
 if (cli.input[0]) {
   // If there is first argument, then read this file
+  const args = [
+    tfs(),
+    cli.flags.locale,
+    cli.flags.outFile
+  ];
+
   try {
-    render(
-      fs.readFileSync(cwd(cli.input[0])).toString(),
-      tfs(),
-      cli.flags.locale
-    );
+    render(fs.readFileSync(cli.input[0], 'utf8'), ...args);
+    if (cli.flags.watch) {
+      console.log(`Watching ${cli.input[0]}...`);
+      watcher.watch(cli.input[0])
+        .on('change', path => {
+          console.log(`${path} has been changed.`);
+          render(fs.readFileSync(path, 'utf8'), ...args);
+        });
+    }
   } catch (e) {
     console.error(`Something went wrong: ${e.message}`);
     process.exit(1);
