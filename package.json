@@ -1,6 +1,6 @@
 {
   "name": "textr-cli",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Command line interface for Textr",
   "author": {
     "name": "Denys Dovhan",
@@ -33,7 +33,11 @@
   "keywords": [
     "cli",
     "cli-app",
-    "textr"
+    "textr",
+    "typo",
+    "typography",
+    "typographic",
+    "transformer"
   ],
   "license": "MIT",
   "bugs": {
