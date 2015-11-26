@@ -47,14 +47,6 @@ const cli = meow(`
 );
 
 /**
- * Resolve file name with current dir
- * @param  {String} file Any relative filename
- * @return {String}      Resolved path to file
- */
-const cwd = file =>
-  path.resolve(process.cwd(), file);
-
-/**
  * Render text string throught textr transformer
  * @param  {String} text   Text that will be processed
  * @param  {Array}  tfs    Array of transformers
@@ -65,7 +57,7 @@ const render = (text, tfs = [], locale = 'en-us', output) => {
   const res = (textr({ locale }).use.apply(null, tfs))(text);
   if (output) {
     try {
-      fs.writeFileSync(cwd(output), res, 'utf8');
+      fs.writeFileSync(output, res, 'utf8');
     } catch (e) {
       console.error(`Something went wrong: ${e.message}`);
       process.exit(1);
