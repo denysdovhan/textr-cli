@@ -56,12 +56,8 @@ const cli = meow(`
 const render = (text, tfs = [], locale = 'en-us', output) => {
   const res = (textr({ locale }).use.apply(null, tfs))(text);
   if (output) {
-    try {
-      fs.writeFileSync(output, res, 'utf8');
-    } catch (e) {
-      console.error(`Something went wrong: ${e.message}`);
-      process.exit(1);
-    }
+    fs.writeFileSync(output, res, 'utf8');
+    process.exit(0);
   } else {
     process.stdout.write(res);
     process.exit(0);
@@ -89,19 +85,14 @@ if (cli.input[0]) {
     cli.flags.outFile
   ];
 
-  try {
-    render(fs.readFileSync(cli.input[0], 'utf8'), ...args);
-    if (cli.flags.watch) {
-      console.log(`Watching ${cli.input[0]}...`);
-      watcher.watch(cli.input[0])
-        .on('change', path => {
-          console.log(`${path} has been changed.`);
-          render(fs.readFileSync(path, 'utf8'), ...args);
-        });
-    }
-  } catch (e) {
-    console.error(`Something went wrong: ${e.message}`);
-    process.exit(1);
+  render(fs.readFileSync(cli.input[0], 'utf8'), ...args);
+  if (cli.flags.watch) {
+    console.log(`Watching ${cli.input[0]}...`);
+    watcher.watch(cli.input[0])
+      .on('change', path => {
+        console.log(`${path} has been changed.`);
+        render(fs.readFileSync(path, 'utf8'), ...args);
+      });
   }
 } else {
   // If there's no first argument, then try to read stdin
