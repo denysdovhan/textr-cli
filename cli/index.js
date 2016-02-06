@@ -5,8 +5,7 @@ import watcher  from 'chokidar';
 import textr    from 'textr';
 
 // Native Modules
-import path     from 'path';
-import fs       from 'fs';
+import { readFileSync, writeFileSync } from 'fs';
 
 /**
  * CLI app instance of Meow
@@ -54,14 +53,13 @@ const cli = meow(`
  * @return {Void}          Write into strout or file and exit
  */
 const render = (text, tfs = [], locale = 'en-us', output) => {
-  const res = (textr({ locale }).use.apply(null, tfs))(text);
+  const res = (textr({ locale }).use(...tfs))(text);
   if (output) {
-    fs.writeFileSync(output, res, 'utf8');
-    process.exit(0);
+    writeFileSync(output, res, 'utf8');
   } else {
     process.stdout.write(res);
-    process.exit(0);
   }
+  process.exit(0);
 };
 
 /**
@@ -85,13 +83,13 @@ if (cli.input[0]) {
     cli.flags.outFile
   ];
 
-  render(fs.readFileSync(cli.input[0], 'utf8'), ...args);
+  render(readFileSync(cli.input[0], 'utf8'), ...args);
   if (cli.flags.watch) {
     console.log(`Watching ${cli.input[0]}...`);
     watcher.watch(cli.input[0])
       .on('change', path => {
         console.log(`${path} has been changed.`);
-        render(fs.readFileSync(path, 'utf8'), ...args);
+        render(readFileSync(path, 'utf8'), ...args);
       });
   }
 } else {

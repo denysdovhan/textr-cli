@@ -1,11 +1,11 @@
 import { spawn, exec, execFile, execFileSync } from 'child_process';
-import assert from 'assert';
-import fs from 'fs';
+import { equal, ifError } from 'assert';
+import { readFileSync, createReadStream } from 'fs';
 
 const textr = '../bin/textr';
 
-const fixtures = fs.readFileSync('test/fixtures', 'utf-8');
-let expected = fs.readFileSync('test/expected/en', 'utf-8');
+const fixtures = readFileSync('test/fixtures', 'utf-8');
+let expected = readFileSync('test/expected/en', 'utf-8');
 
 describe('textr-cli', () => {
 
@@ -17,8 +17,8 @@ describe('textr-cli', () => {
         stdio: 'inherit'
       });
 
-      cp.on('error', err => assert.ifError(err));
-      cp.on('close', code => assert.equal(code, 0));
+      cp.on('error', err => ifError(err));
+      cp.on('close', code => equal(code, 0));
     });
 
   });
@@ -29,7 +29,7 @@ describe('textr-cli', () => {
       const stdout = execFileSync(`${textr}`, ['fixtures'], {
         cwd: __dirname
       });
-      assert.equal(stdout.toString(), fixtures);
+      equal(stdout.toString(), fixtures);
     });
 
     it('should load text from stdin', (done) => {
@@ -37,7 +37,7 @@ describe('textr-cli', () => {
         cwd: __dirname
       }, (err, stdout) => {
         if (err) done(err);
-        assert.equal(stdout, fixtures);
+        equal(stdout, fixtures);
         done();
       });
     });
@@ -52,8 +52,8 @@ describe('textr-cli', () => {
           cwd: __dirname
         });
 
-      assert.equal(stdout.toString(), '');
-      assert.equal(fs.readFileSync('test/actual', 'utf8'), expected);
+      equal(stdout.toString(), '');
+      equal(readFileSync('test/actual', 'utf8'), expected);
     });
 
     it('should write to file with --o', () => {
@@ -66,8 +66,8 @@ describe('textr-cli', () => {
           cwd: __dirname
         });
 
-      assert.equal(stdout.toString(), '');
-      assert.equal(fs.readFileSync('test/actual', 'utf8'), expected);
+      equal(stdout.toString(), '');
+      equal(readFileSync('test/actual', 'utf8'), expected);
     });
 
   });
@@ -75,7 +75,7 @@ describe('textr-cli', () => {
   describe('transforms', () => {
 
     it('should not transform text without transformers', () => {
-      const text = fs.createReadStream('test/fixtures');
+      const text = createReadStream('test/fixtures');
 
       const cp = spawn(`${textr}`, {
         cwd: __dirname,
@@ -83,8 +83,8 @@ describe('textr-cli', () => {
 
       text.pipe(cp.stdin);
 
-      cp.stdout.on('data', data => assert.equal(data.toString(), fixtures));
-      cp.stdout.on('close', code => assert.equal(code, 0));
+      cp.stdout.on('data', data => equal(data.toString(), fixtures));
+      cp.stdout.on('close', code => equal(code, 0));
     });
 
     it('should load --transforms as string', () => {
@@ -94,7 +94,7 @@ describe('textr-cli', () => {
         'typographic-single-spaces,typographic-quotes,typographic-ellipses'], {
           cwd: __dirname
         });
-      assert.equal(stdout.toString(), expected);
+      equal(stdout.toString(), expected);
     });
 
     it('should load -t as string', () => {
@@ -104,7 +104,7 @@ describe('textr-cli', () => {
         'typographic-single-spaces,typographic-quotes,typographic-ellipses'], {
           cwd: __dirname
         });
-      assert.equal(stdout.toString(), expected);
+      equal(stdout.toString(), expected);
     });
 
     it('should load few --transforms', () => {
@@ -118,7 +118,7 @@ describe('textr-cli', () => {
         'typographic-ellipses'], {
           cwd: __dirname
         });
-      assert.equal(stdout.toString(), expected);
+      equal(stdout.toString(), expected);
     });
 
     it('should load few -t', () => {
@@ -132,7 +132,7 @@ describe('textr-cli', () => {
         'typographic-ellipses'], {
           cwd: __dirname
         });
-      assert.equal(stdout.toString(), expected);
+      equal(stdout.toString(), expected);
     });
 
   });
@@ -140,7 +140,7 @@ describe('textr-cli', () => {
   describe('locale', () => {
 
     before(() => {
-      expected = fs.readFileSync('test/expected/ru', 'utf-8');
+      expected = readFileSync('test/expected/ru', 'utf-8');
     });
 
     it('should load locale using --locale', () => {
@@ -152,7 +152,7 @@ describe('textr-cli', () => {
         'typographic-single-spaces,typographic-quotes,typographic-ellipses'], {
           cwd: __dirname
         });
-      assert.equal(stdout.toString(), expected);
+      equal(stdout.toString(), expected);
     });
 
     it('should load locale using -l', () => {
@@ -164,7 +164,7 @@ describe('textr-cli', () => {
         'typographic-single-spaces,typographic-quotes,typographic-ellipses'], {
           cwd: __dirname
         });
-      assert.equal(stdout.toString(), expected);
+      equal(stdout.toString(), expected);
     });
 
   });
