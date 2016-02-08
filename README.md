@@ -66,12 +66,12 @@ Typography for everybody!
 
 MIT © [Denys Dovhan](http://denysdovhan.com)
 
-[textr]: https://github.com/shuvalov-anton/textr/
+[textr]: https://github.com/A/textr
 
-[typographic-quotes]: https://github.com/matmuchrapna/typographic-quotes
-[typographic-math-symbols]: https://github.com/matmuchrapna/typographic-math-symbols
-[typographic-em-dashes]: https://github.com/matmuchrapna/typographic-em-dashes
-[typographic-ellipses]: https://github.com/matmuchrapna/typographic-ellips
+[typographic-quotes]: https://github.com/iamstarkov/typographic-quotes
+[typographic-math-symbols]: https://github.com/iamstarkov/typographic-math-symbols
+[typographic-em-dashes]: https://github.com/iamstarkov/typographic-em-dashes
+[typographic-ellipses]: https://github.com/iamstarkov/typographic-ellips
 
 [npm-url]: https://npmjs.org/package/textr-cli
 [npm-image]: https://img.shields.io/npm/v/textr-cli.svg?style=flat
