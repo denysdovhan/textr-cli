@@ -61,7 +61,7 @@
   "dependencies": {
     "get-stdin": "^6.0.0",
     "chokidar": "^2.0.0",
-    "meow": "^3.5.0",
+    "meow": "^4.0.1",
     "textr": "^0.3.0"
   }
 }
