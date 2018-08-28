@@ -48,7 +48,7 @@
     "assert": "^1.3.0",
     "babel-cli": "^6.22.2",
     "babel-core": "^6.22.1",
-    "babel-eslint": "^8.0.0",
+    "babel-eslint": "^9.0.0",
     "babel-preset-es2015": "^6.0.12",
     "eslint": "^4.1.0",
     "mocha": "^5.0.0",
